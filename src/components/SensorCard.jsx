@@ -1,47 +1,89 @@
 import React from 'react';
-import { Droplet, Thermometer, Wind, MapPin } from 'lucide-react';
+import { useSensorStore } from '../store/store';
 
-function SensorCard({ name, temperature, humidity, soilMoisture, status, location }) {
+export default function SensorCard({ sensor }) {
+  const { selectSensor } = useSensorStore();
+
+  // Déterminer le statut de santé du capteur
+  const getHealthStatus = () => {
+    const temp = sensor.temperature || 0;
+    const humidity = sensor.humidity || 0;
+    const soil = sensor.soilMoisture || 0;
+
+    if (temp > 35 || humidity < 30 || soil < 20) {
+      return { status: 'critical', color: 'red', text: 'Critique' };
+    } else if (temp > 30 || humidity < 40 || soil < 30) {
+      return { status: 'warning', color: 'yellow', text: 'Attention' };
+    }
+    return { status: 'good', color: 'green', text: 'Bon état' };
+  };
+
+  const health = getHealthStatus();
+
   const statusColors = {
-    ok: 'bg-green-100 text-green-800 border-green-300',
-    warning: 'bg-yellow-100 text-yellow-800 border-yellow-300',
-    critical: 'bg-red-100 text-red-800 border-red-300'
+    red: 'bg-red-100 border-red-500',
+    yellow: 'bg-yellow-100 border-yellow-500',
+    green: 'bg-green-100 border-green-500',
+  };
+
+  const badgeColors = {
+    red: 'bg-red-500',
+    yellow: 'bg-yellow-500',
+    green: 'bg-green-500',
+  };
+
+  const handleClick = () => {
+    const sensorId = sensor.id || sensor.sensorId;
+    if (sensorId) {
+      selectSensor(sensorId);
+    }
   };
 
   return (
-    <div className={`bg-white rounded-lg shadow-md p-6 border-l-4 ${statusColors[status] || statusColors.ok}`}>
-      <div className="flex justify-between items-start mb-4">
-        <div>
-          <h3 className="text-lg font-semibold text-gray-800">{name}</h3>
-          <p className="text-sm text-gray-500 flex items-center mt-1">
-            <MapPin className="w-4 h-4 mr-1" />
-            {location}
-          </p>
+    <div 
+      className={`${statusColors[health.color]} rounded-lg p-4 border-2 cursor-pointer hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1`}
+      onClick={handleClick}
+    >
+      {/* Header */}
+      <div className="flex justify-between items-start mb-3">
+        <div className="flex-1">
+          <h3 className="text-lg font-bold text-gray-800">
+            {sensor.name || sensor.sensorId || 'Capteur'}
+          </h3>
+          <p className="text-sm text-gray-600">{sensor.location || 'Zone inconnue'}</p>
         </div>
-        <span className={`px-3 py-1 rounded-full text-xs font-medium ${statusColors[status]}`}>
-          {status.toUpperCase()}
+        <span className={`${badgeColors[health.color]} text-white px-2 py-1 rounded-full text-xs font-bold`}>
+          {health.text}
         </span>
       </div>
 
-      <div className="grid grid-cols-3 gap-4">
+      {/* Metrics Grid */}
+      <div className="grid grid-cols-3 gap-3 mb-3">
         <div className="text-center">
-          <Thermometer className="w-6 h-6 mx-auto text-orange-500 mb-2" />
-          <p className="text-2xl font-bold text-gray-800">{temperature}°C</p>
-          <p className="text-xs text-gray-500">Temperature</p>
+          <p className="text-xs text-gray-600 mb-1">🌡️ Temp</p>
+          <p className="text-xl font-bold text-gray-800">
+            {sensor.temperature?.toFixed(1) || 0}°
+          </p>
         </div>
         <div className="text-center">
-          <Droplet className="w-6 h-6 mx-auto text-blue-500 mb-2" />
-          <p className="text-2xl font-bold text-gray-800">{humidity}%</p>
-          <p className="text-xs text-gray-500">Humidity</p>
+          <p className="text-xs text-gray-600 mb-1">💧 Humid</p>
+          <p className="text-xl font-bold text-gray-800">
+            {sensor.humidity?.toFixed(1) || 0}%
+          </p>
         </div>
         <div className="text-center">
-          <Wind className="w-6 h-6 mx-auto text-green-500 mb-2" />
-          <p className="text-2xl font-bold text-gray-800">{soilMoisture}%</p>
-          <p className="text-xs text-gray-500">Soil</p>
+          <p className="text-xs text-gray-600 mb-1">🌱 Sol</p>
+          <p className="text-xl font-bold text-gray-800">
+            {sensor.soilMoisture?.toFixed(1) || 0}%
+          </p>
         </div>
+      </div>
+
+      {/* Footer */}
+      <div className="flex justify-between items-center text-xs text-gray-500 pt-3 border-t border-gray-300">
+        <span>📍 {sensor.sensorId || sensor.id || 'N/A'}</span>
+        <span>🕐 {new Date(sensor.timestamp || Date.now()).toLocaleTimeString('fr-FR')}</span>
       </div>
     </div>
   );
 }
-
-export default SensorCard;
