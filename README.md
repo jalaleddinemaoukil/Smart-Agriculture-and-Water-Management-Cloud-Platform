@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # sawmp-dashboard
 Smart Agriculture &amp; Water Management 
 =======
@@ -72,4 +72,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
->>>>>>> 3c13e0f (Initial commit)
+
