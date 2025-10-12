@@ -1,12 +1,12 @@
 import json
+import os
 import random
 from datetime import datetime
 from azure.eventhub import EventHubProducerClient, EventData
 
-CONNECTION_STR = "Endpoint=sb://sawmp-hubs.servicebus.windows.net/;SharedAccessKeyName=sawmp-job_sawmp-event_policy;SharedAccessKey=UxxxBbyElN7R1bxki/McYqyMlYyNIqLrj+AEhDz/cUU=;EntityPath=sawmp-event"
-EVENTHUB_NAME = "sawmp-event"
+CONNECTION_STR = os.getenv("EVENTHUB_CONNECTION_STR")
+EVENTHUB_NAME = os.getenv("EVENTHUB_NAME")
 
-# FARMING-SPECIFIC CONFIGURATIONS
 FIELDS = [
     {"id": "Field_A", "crop": "Tomatoes", "area_hectares": 2.5},
     {"id": "Field_B", "crop": "Wheat", "area_hectares": 5.0},
@@ -136,7 +136,7 @@ def send_data_to_eventhub():
         with producer:
             producer.send_batch([event_data])
         
-        # Pretty print with alert indicator
+        
         status_emoji = {"normal": "✅", "warning": "⚠️", "critical": "🔴"}
         print(f"{status_emoji[sensor_data['status']]} [{sensor_data['timestamp']}] "
               f"{sensor_data['fieldId']} ({sensor_data['cropType']}) - "
@@ -149,10 +149,10 @@ def send_data_to_eventhub():
 
 if __name__ == "__main__":
     import time
-    print("🌾 Starting Enhanced Farming IoT Simulator...")
-    print("📡 Sending data to Azure Event Hub...\n")
+    print("Starting Enhanced Farming IoT Simulator...")
+    print("Sending data to Azure Event Hub...\n")
     
     # For continuous simulation, run in loop
     while True:
         send_data_to_eventhub()
-        time.sleep(5)  # Send data every 5 seconds
+        time.sleep(5)  
