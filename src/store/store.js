@@ -42,7 +42,6 @@ export const useSensorStore = create((set, get) => ({
         loading: false,
         lastUpdate: new Date().toISOString()
       });
-      // Debug log for sensors state
       console.log('Updated sensors state:', get().sensors);
       
       get().calculateStats();
@@ -176,7 +175,7 @@ export const useSensorStore = create((set, get) => ({
   },
 
   refreshAll: async () => {
-    console.log('🔄 Refreshing all data...');
+    console.log('Refreshing all data...');
     const { fetchSensors, fetchRealtime, fetchAlerts, fetchReports } = get();
     set({ loading: true });
     

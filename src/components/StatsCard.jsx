@@ -1,31 +1,52 @@
 export default function StatsCard({ title, value, icon, color, subtitle }) {
   const colorClasses = {
-    blue: 'bg-blue-500',
-    red: 'bg-red-500',
-    orange: 'bg-orange-500',
-    cyan: 'bg-cyan-500',
-    green: 'bg-green-500',
+    blue: {
+      bg: 'bg-blue-50',
+      border: 'border-l-4 border-blue-500',
+      text: 'text-blue-600',
+      badge: 'bg-blue-500 text-white',
+    },
+    red: {
+      bg: 'bg-red-500',
+      border: 'border-l-4 border-red-600',
+      text: 'text-white',
+      badge: 'bg-white text-red-600',
+    },
+    orange: {
+      bg: 'bg-orange-50',
+      border: 'border-l-4 border-orange-500',
+      text: 'text-orange-600',
+      badge: 'bg-orange-500 text-white',
+    },
+    cyan: {
+      bg: 'bg-cyan-50',
+      border: 'border-l-4 border-cyan-500',
+      text: 'text-cyan-600',
+      badge: 'bg-cyan-500 text-white',
+    },
+    green: {
+      bg: 'bg-green-50',
+      border: 'border-l-4 border-green-500',
+      text: 'text-green-600',
+      badge: 'bg-green-500 text-white',
+    },
   };
 
-  const bgColorClasses = {
-    blue: 'bg-blue-50',
-    red: 'bg-red-50',
-    orange: 'bg-orange-50',
-    cyan: 'bg-cyan-50',
-    green: 'bg-green-50',
-  };
+  const styles = colorClasses[color] || colorClasses.blue;
 
   return (
-    <div className={`${bgColorClasses[color]} rounded-lg shadow-md p-6 border-l-4 ${colorClasses[color]}`}>
+    <div className={`${styles.bg} ${styles.border} rounded-lg shadow-md p-6`}>
       <div className="flex items-center justify-between mb-2">
-        <div className="text-3xl">{icon}</div>
-        <div className={`${colorClasses[color]} text-white px-3 py-1 rounded-full text-xs font-bold`}>
+        <div className={`text-3xl ${styles.text}`}>
+          {icon} {/* Icon inherits color via parent */}
+        </div>
+        <div className={`${styles.badge} px-3 py-1 rounded-full text-xs font-bold`}>
           LIVE
         </div>
       </div>
-      <h3 className="text-gray-600 text-sm font-medium mb-1">{title}</h3>
-      <p className="text-3xl font-bold text-gray-800 mb-1">{value}</p>
-      {subtitle && <p className="text-xs text-gray-500">{subtitle}</p>}
+      <h3 className={`text-sm font-medium mb-1 ${styles.text}`}>{title}</h3>
+      <p className={`text-3xl font-bold mb-1 ${styles.text}`}>{value}</p>
+      {subtitle && <p className={`text-xs ${styles.text}`}>{subtitle}</p>}
     </div>
   );
 }

@@ -1,13 +1,17 @@
 import React from 'react';
-import { TrendingUp, MapPin, AlertTriangle, Download, Settings, X } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import { TrendingUp, MapPin, AlertTriangle, Download, Settings, X, BarChart3 } from 'lucide-react';
 
 function Sidebar({ isOpen, onClose }) {
+  const location = useLocation();
+
   const menuItems = [
-    { icon: TrendingUp, label: 'Dashboard', active: true },
-    { icon: MapPin, label: 'Sensors', active: false },
-    { icon: AlertTriangle, label: 'Alerts', active: false },
-    { icon: Download, label: 'Reports', active: false },
-    { icon: Settings, label: 'Settings', active: false },
+    { icon: TrendingUp, label: 'Dashboard', path: '/' },
+    { icon: MapPin, label: 'Sensors', path: '/sensors' },
+    { icon: AlertTriangle, label: 'Alerts', path: '/alerts' },
+    { icon: BarChart3, label: 'Analytics', path: '/analytics' },
+    { icon: Download, label: 'Reports', path: '/reports' },
+    { icon: Settings, label: 'Settings', path: '/settings' },
   ];
 
   return (
@@ -32,21 +36,26 @@ function Sidebar({ isOpen, onClose }) {
         </div>
         
         <nav className="p-4">
-          {menuItems.map((item, index) => (
-            <button
-              key={index}
-              className={`
-                w-full flex items-center px-4 py-3 rounded-lg mb-2 transition
-                ${item.active 
-                  ? 'bg-green-600 text-white' 
-                  : 'text-gray-300 hover:bg-gray-800'
-                }
-              `}
-            >
-              <item.icon className="w-5 h-5 mr-3" />
-              <span>{item.label}</span>
-            </button>
-          ))}
+          {menuItems.map((item, index) => {
+            const isActive = location.pathname === item.path;
+            return (
+              <Link
+                key={index}
+                to={item.path}
+                onClick={onClose}
+                className={`
+                  w-full flex items-center px-4 py-3 rounded-lg mb-2 transition
+                  ${isActive 
+                    ? 'bg-green-600 text-white' 
+                    : 'text-gray-300 hover:bg-gray-800'
+                  }
+                `}
+              >
+                <item.icon className="w-5 h-5 mr-3" />
+                <span>{item.label}</span>
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-800">

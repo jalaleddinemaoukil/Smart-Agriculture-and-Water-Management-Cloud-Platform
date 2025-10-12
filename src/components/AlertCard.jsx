@@ -1,30 +1,31 @@
 import React from 'react';
 import { useSensorStore } from '../store/store';
+import { AlertTriangle, Info, Bell } from 'lucide-react';
 
 export default function AlertCard({ alert }) {
   const { resolveAlert } = useSensorStore();
 
   const severityConfig = {
     critical: {
-      icon: '🚨',
-      bgColor: 'bg-red-100',
-      borderColor: 'border-red-500',
+      icon: <AlertTriangle className="w-6 h-6 text-red-600" />,
+      bgColor: 'bg-red-50',
+      borderColor: 'border-red-200',
       textColor: 'text-red-700',
-      badgeColor: 'bg-red-500',
+      badgeColor: 'bg-red-600',
     },
     warning: {
-      icon: '⚠️',
-      bgColor: 'bg-yellow-100',
-      borderColor: 'border-yellow-500',
+      icon: <Bell className="w-6 h-6 text-yellow-600" />,
+      bgColor: 'bg-yellow-50',
+      borderColor: 'border-yellow-200',
       textColor: 'text-yellow-700',
       badgeColor: 'bg-yellow-500',
     },
     info: {
-      icon: 'ℹ️',
-      bgColor: 'bg-blue-100',
-      borderColor: 'border-blue-500',
+      icon: <Info className="w-6 h-6 text-blue-600" />,
+      bgColor: 'bg-blue-50',
+      borderColor: 'border-blue-200',
       textColor: 'text-blue-700',
-      badgeColor: 'bg-blue-500',
+      badgeColor: 'bg-blue-600',
     },
   };
 
@@ -40,11 +41,11 @@ export default function AlertCard({ alert }) {
   };
 
   return (
-    <div className={`${config.bgColor} border-2 ${config.borderColor} rounded-lg p-4`}>
+    <div className={`${config.bgColor} border ${config.borderColor} rounded-lg p-4 shadow-sm`}>
       {/* Header */}
       <div className="flex items-start justify-between mb-3">
-        <div className="flex items-center gap-2">
-          <span className="text-2xl">{config.icon}</span>
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-white rounded-md shadow-sm">{config.icon}</div>
           <div>
             <h3 className={`font-bold ${config.textColor}`}>
               {alert.type || alert.alertType || 'Alerte'}
@@ -78,6 +79,7 @@ export default function AlertCard({ alert }) {
         <button
           onClick={handleResolve}
           className="bg-white hover:bg-gray-100 text-gray-700 px-3 py-1 rounded text-xs font-medium transition"
+          aria-label={`Resolve alert ${alert.id || ''}`}
         >
           ✓ Résoudre
         </button>
