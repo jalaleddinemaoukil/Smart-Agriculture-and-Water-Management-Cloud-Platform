@@ -1,5 +1,3 @@
-
-# sawmp-dashboard
 Smart Agriculture &amp; Water Management 
 =======
 # Getting Started with Create React App
