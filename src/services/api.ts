@@ -2,7 +2,7 @@ import axios, { type AxiosInstance, AxiosError } from 'axios';
 import type { Sensor, Alert, Report } from '@/types/sensor.types';
 import type { ApiResponse } from '@/types/api.types';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = import.meta.env.REACT_APP_API_BASE_URL;
 
 const api: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
