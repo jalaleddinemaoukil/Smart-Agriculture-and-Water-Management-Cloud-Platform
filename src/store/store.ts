@@ -1,6 +1,6 @@
 import { create } from 'zustand';
-import { sensorAPI } from '@/services/api';
-import type { Sensor, Alert, Report, Stats } from '@/types/sensor.types';
+import { sensorAPI } from '../services/api';
+import type { Sensor, Alert, Report, Stats } from '../types/sensor.types';
 
 interface SensorStore {
   // State
