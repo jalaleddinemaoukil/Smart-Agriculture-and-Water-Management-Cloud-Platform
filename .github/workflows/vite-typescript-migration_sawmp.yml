@@ -26,12 +26,16 @@ jobs:
 
       - name: Build project
         run: npm run build
+        env:
+          REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL }}
+          # ⚠️ ONLY frontend-safe env vars go here
+          # Do NOT add EVENTHUB_CONNECTION_STR, AZURE_SUBSCRIPTION_ID, etc. (keep them in Azure App Settings)
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: build-output
-          path: ./dist  # Vite build folder
+          path: ./dist  # Vite build output
 
   deploy:
     runs-on: ubuntu-latest
