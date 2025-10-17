@@ -1,6 +1,6 @@
 import { useSensorStore } from '../store/store';
 import { AlertTriangle, Info, Bell } from 'lucide-react';
-import type { Alert } from '@/types/sensor.types';
+import type { Alert } from '../types/sensor.types';
 
 interface AlertCardProps {
   alert: Alert;

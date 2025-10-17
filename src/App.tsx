@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Dashboard from '@/pages/Dashboard';
-import Analytics from '@/pages/Analytics';
-import Sensors from '@/pages/Sensors';
-import Alerts from '@/pages/Alerts';
-import Reports from '@/pages/Reports';
-import Settings from '@/pages/Settings';
+import Dashboard from './pages/Dashboard';
+import Analytics from './pages/Analytics';
+import Sensors from './pages/Sensors';
+import Alerts from './pages/Alerts';
+import Reports from './pages/Reports';
+import Settings from './pages/Settings';
 
 function App() {
   return (

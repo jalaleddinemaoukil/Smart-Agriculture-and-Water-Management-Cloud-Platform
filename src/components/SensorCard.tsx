@@ -1,6 +1,6 @@
-import { useSensorStore } from '@/store/store';
+import { useSensorStore } from '../store/store';
 import { Thermometer, Droplet } from 'lucide-react';
-import type { Sensor } from '@/types/sensor.types';
+import type { Sensor } from '../types/sensor.types';
 
 interface SensorCardProps {
   sensor: Sensor;
