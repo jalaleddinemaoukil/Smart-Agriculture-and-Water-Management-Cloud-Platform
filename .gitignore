@@ -25,10 +25,6 @@ dist-ssr
 
 .env
 
-components.json
+
 docker
 terraform
-src/pages
-src/config
-src/auth
-src/App.tsx
