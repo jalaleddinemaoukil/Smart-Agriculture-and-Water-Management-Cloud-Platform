@@ -25,7 +25,6 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 
-// This is sample data.
 const data = {
   user: {
     name: "shadcn",
@@ -56,18 +55,9 @@ const data = {
       icon: SquareTerminal,
       isActive: true,
       items: [
-        {
-          title: "History",
-          url: "#",
-        },
-        {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
-        },
+        { title: "History", url: "#" },
+        { title: "Starred", url: "#" },
+        { title: "Settings", url: "#" },
       ],
     },
     {
@@ -75,18 +65,9 @@ const data = {
       url: "#",
       icon: Bot,
       items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
+        { title: "Genesis", url: "#" },
+        { title: "Explorer", url: "#" },
+        { title: "Quantum", url: "#" },
       ],
     },
     {
@@ -94,22 +75,10 @@ const data = {
       url: "#",
       icon: BookOpen,
       items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
+        { title: "Introduction", url: "#" },
+        { title: "Get Started", url: "#" },
+        { title: "Tutorials", url: "#" },
+        { title: "Changelog", url: "#" },
       ],
     },
     {
@@ -117,67 +86,60 @@ const data = {
       url: "#",
       icon: Settings2,
       items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
+        { title: "General", url: "#" },
+        { title: "Team", url: "#" },
+        { title: "Billing", url: "#" },
+        { title: "Limits", url: "#" },
       ],
     },
   ],
   projects: [
-    {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
-    },
+    { name: "Design Engineering", url: "#", icon: Frame },
+    { name: "Sales & Marketing", url: "#", icon: PieChart },
+    { name: "Travel", url: "#", icon: Map },
   ],
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
+      {/* ----------------------- HEADER ----------------------- */}
       <SidebarHeader>
-         <SidebarMenu>
+        <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" className="bg-white w-full h-15" asChild>
-              <a href="#">
-                <img src="/logo.png" alt="swamp logo" className="h-full" />
-                <div className="flex flex-col gap-0.5 leading-none">
-                  <span className="font-medium">Dashboard</span>
+            <SidebarMenuButton
+              size="lg"
+              className="w-full h-14 bg-background hover:bg-accent transition-colors"
+              asChild
+            >
+              <a href="#" className="flex items-center gap-3">
+                <img
+                  src="/logo.webp"
+                  alt="swamp logo"
+                  className="h-8 w-8 rounded-md object-contain"
+                />
+                <div className="flex flex-col leading-tight">
+                  <span className="font-semibold text-sm">Dashboard</span>
+                  <span className="text-xs text-muted-foreground">
+                    Admin Panel
+                  </span>
                 </div>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
-      <SidebarContent>
+
+      {/* ----------------------- CONTENT ----------------------- */}
+      <SidebarContent className="pt-2">
         <NavMain items={data.navMain} />
       </SidebarContent>
-      <SidebarFooter>
+
+      {/* ----------------------- FOOTER ----------------------- */}
+      <SidebarFooter className="border-t pt-2">
         <NavUser user={data.user} />
       </SidebarFooter>
+
       <SidebarRail />
     </Sidebar>
   )

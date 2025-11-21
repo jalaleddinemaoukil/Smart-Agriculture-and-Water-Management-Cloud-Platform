@@ -8,7 +8,7 @@ import { Button } from "../components/ui/button";
 import { Card } from "../components/ui/card";
 import { cn } from "../lib/utils";
 
-const DEV_MODE = false;
+const DEV_MODE = true;
 
 export default function Login() {
   const { instance, accounts } = useMsal();
@@ -81,7 +81,7 @@ export default function Login() {
                   </div>
 
                  
-                  <div className="grid grid-cols-3 gap-4">
+                  <div className="grid grid-cols-2 gap-4">
                     <Button
                       variant="outline"
                       className="w-full"

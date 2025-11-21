@@ -4,7 +4,7 @@ import DashboardPage from "./pages/Dashboard";
 import ProtectedRoute from "./routes/ProtectedRoute";
 
 
-const DEV_MODE = false; 
+const DEV_MODE = true; 
 
 export default function App() {
   return (
