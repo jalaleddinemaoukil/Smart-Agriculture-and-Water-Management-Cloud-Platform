@@ -1,26 +1,23 @@
 import { type Configuration, LogLevel } from "@azure/msal-browser";
 
-
-const redirectUri =
-  window.location.hostname === "localhost"
-    ? import.meta.env.VITE_AZURE_REDIRECT_URI
-    : import.meta.env.VITE_AZURE_REDIRECT_URI_PROD;
-
-const postLogoutRedirectUri =
-  window.location.hostname === "localhost"
-    ? "http://localhost:5173"
-    : "https://swamp.azurewebsites.net";
-
+// Instead of checking env variables which might be undefined, 
+// we simply ask the browser "Where are we right now?"
+// This resolves to "http://localhost:5173" locally and your domain in prod.
+const currentOrigin = window.location.origin;
 
 export const msalConfig: Configuration = {
   auth: {
-    clientId: import.meta.env.VITE_AZURE_CLIENT_ID!,
-    authority: import.meta.env.VITE_AZURE_AUTHORITY!,
-    redirectUri,
-    postLogoutRedirectUri,
+    // We add a fallback string "MISSING_CLIENT_ID" to prevent the "undefined" crash
+    // if the env variable is not loaded.
+    clientId: import.meta.env.VITE_AZURE_CLIENT_ID || "MISSING_CLIENT_ID",
+    authority: import.meta.env.VITE_AZURE_AUTHORITY || "https://login.microsoftonline.com/common",
+    
+    
+    redirectUri: currentOrigin, 
+    postLogoutRedirectUri: currentOrigin,
   },
   cache: {
-    cacheLocation: "localStorage", 
+    cacheLocation: "localStorage",
     storeAuthStateInCookie: false,
   },
   system: {
@@ -32,10 +29,10 @@ export const msalConfig: Configuration = {
             console.error(message);
             break;
           case LogLevel.Info:
-            console.info(message);
+            
             break;
           case LogLevel.Verbose:
-            console.debug(message);
+            
             break;
           case LogLevel.Warning:
             console.warn(message);
@@ -46,13 +43,13 @@ export const msalConfig: Configuration = {
   },
 };
 
-
 export const loginRequest = { scopes: ["User.Read"] };
 
-
 export const apiRequest = {
-  scopes: [import.meta.env.VITE_API_SCOPE!],
+  
+  scopes: [import.meta.env.VITE_API_SCOPE || "User.Read"],
 };
 
-
-export const graphConfig = { graphMeEndpoint: "https://graph.microsoft.com/v1.0/me" };
+export const graphConfig = { 
+    graphMeEndpoint: "https://graph.microsoft.com/v1.0/me" 
+};

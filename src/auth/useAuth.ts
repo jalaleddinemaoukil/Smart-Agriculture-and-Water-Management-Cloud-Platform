@@ -1,7 +1,6 @@
-import { useEffect, useCallback } from "react";
+import { useCallback } from "react";
 import { useMsal } from "@azure/msal-react";
 import { apiRequest } from "../config/authconfig";
-import { setTokenGetter } from "../services/api";
 
 export const useAuth = () => {
   const { instance, accounts } = useMsal();
@@ -22,12 +21,6 @@ export const useAuth = () => {
       return null;
     }
   }, [instance, accounts]);
-
-  useEffect(() => {
-    if (accounts.length > 0) {
-      setTokenGetter(getAccessToken);
-    }
-  }, [getAccessToken, accounts.length]);
 
   return {
     isAuthenticated: accounts.length > 0,

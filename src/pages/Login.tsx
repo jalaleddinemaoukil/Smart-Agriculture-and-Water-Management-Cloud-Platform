@@ -8,7 +8,7 @@ import { Button } from "../components/ui/button";
 import { Card } from "../components/ui/card";
 import { cn } from "../lib/utils";
 
-const DEV_MODE = true;
+const DEV_MODE = false;
 
 export default function Login() {
   const { instance, accounts } = useMsal();
@@ -134,7 +134,6 @@ export default function Login() {
               <div style={{ 
                 position: 'relative',
                 minHeight: '600px',
-                backgroundColor: '#ef4444',
                 display: 'block'
               }}>
                 <img
