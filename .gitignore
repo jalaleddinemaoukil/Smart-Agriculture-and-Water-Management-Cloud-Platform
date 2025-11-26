@@ -27,6 +27,6 @@ dist-ssr
 
 
 docker
-
+terraform
 *storybook.log
 storybook-static
