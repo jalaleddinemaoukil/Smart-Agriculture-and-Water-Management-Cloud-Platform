@@ -157,60 +157,7 @@ export default function Analytics() {
           </div>
 
           {/* Implementation Timeline */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Implementation Timeline</CardTitle>
-              <CardDescription>Planned AI/ML features roadmap</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div className="flex gap-4">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-chart-1 text-white font-bold">
-                    1
-                  </div>
-                  <div>
-                    <p className="font-medium">Week 1-2: Data Foundation</p>
-                    <p className="text-sm text-muted-foreground">
-                      Establish data pipeline, collect sensor readings, build dashboard (Current Phase ✓)
-                    </p>
-                  </div>
-                </div>
-                <div className="flex gap-4">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-muted text-muted-foreground font-bold">
-                    2
-                  </div>
-                  <div>
-                    <p className="font-medium">Week 3: ML Model Development</p>
-                    <p className="text-sm text-muted-foreground">
-                      Train anomaly detection models, implement predictive algorithms using Azure ML Studio
-                    </p>
-                  </div>
-                </div>
-                <div className="flex gap-4">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-muted text-muted-foreground font-bold">
-                    3
-                  </div>
-                  <div>
-                    <p className="font-medium">Week 4: Integration & Testing</p>
-                    <p className="text-sm text-muted-foreground">
-                      Deploy ML models to Azure Functions, integrate with dashboard, validate predictions
-                    </p>
-                  </div>
-                </div>
-                <div className="flex gap-4">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-muted text-muted-foreground font-bold">
-                    4
-                  </div>
-                  <div>
-                    <p className="font-medium">Week 5: Auto-Report Generation</p>
-                    <p className="text-sm text-muted-foreground">
-                      Implement PDF report generation with AI-powered insights and recommendations
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          
         </div>
       </SidebarInset>
     </SidebarProvider>

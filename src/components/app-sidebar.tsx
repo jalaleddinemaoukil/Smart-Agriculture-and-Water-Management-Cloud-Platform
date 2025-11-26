@@ -109,21 +109,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton
               size="lg"
-              className="w-full h-14 bg-background hover:bg-accent transition-colors"
+              className="w-full h-14 bg-background"
               asChild
             >
               <a href="#" className="flex items-center gap-3">
                 <img
                   src="/logo.webp"
                   alt="swamp logo"
-                  className="h-8 w-8 rounded-md object-contain"
+                  className="h-full w-full rounded-md object-contain"
                 />
-                <div className="flex flex-col leading-tight">
-                  <span className="font-semibold text-sm">Dashboard</span>
-                  <span className="text-xs text-muted-foreground">
-                    Admin Panel
-                  </span>
-                </div>
+                
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -132,11 +127,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
       {/* ----------------------- CONTENT ----------------------- */}
       <SidebarContent className="pt-2">
-        <NavMain items={data.navMain} />
+        <NavMain />
       </SidebarContent>
 
       {/* ----------------------- FOOTER ----------------------- */}
-      <SidebarFooter className="border-t pt-2">
+      <SidebarFooter className="pt-2">
         <NavUser user={data.user} />
       </SidebarFooter>
 

@@ -27,3 +27,6 @@ dist-ssr
 
 
 docker
+
+*storybook.log
+storybook-static
