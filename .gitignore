@@ -30,3 +30,4 @@ docker
 terraform
 *storybook.log
 storybook-static
+terraform/.terraform/
