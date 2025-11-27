@@ -1,7 +1,7 @@
 // src/stores/sensorStore.ts
 
 import { create } from 'zustand';
-import { type SensorReading,  type Alert, type SensorState } from '@/types/sensor';
+import { type SensorState } from '@/types/sensor';
 import { fetchSensorData, fetchAlerts } from '@/services/api';
 
 interface SensorStore extends SensorState {

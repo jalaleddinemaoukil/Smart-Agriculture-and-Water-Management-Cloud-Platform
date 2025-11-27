@@ -1,11 +1,17 @@
-import { MsalProvider } from "@azure/msal-react";
-import { PublicClientApplication } from "@azure/msal-browser";
+import { MsalProvider } from "@azure/msal-react"
+import { PublicClientApplication } from "@azure/msal-browser"
+
 import { msalConfig } from "../config/authconfig"
 
+type MsAuthWindow = Window &
+  typeof globalThis & {
+    _pca?: PublicClientApplication
+  }
 
-const pca = (window as any)._pca || new PublicClientApplication(msalConfig);
-(window as any)._pca = pca;
+const msalWindow = window as MsAuthWindow
+const pca = msalWindow._pca ?? new PublicClientApplication(msalConfig)
+msalWindow._pca = pca
 
 export function MsalAuthProvider({ children }: { children: React.ReactNode }) {
-  return <MsalProvider instance={pca}>{children}</MsalProvider>;
+  return <MsalProvider instance={pca}>{children}</MsalProvider>
 }
