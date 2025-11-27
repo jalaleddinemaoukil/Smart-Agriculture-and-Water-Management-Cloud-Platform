@@ -152,7 +152,7 @@ export default function Login() {
           </Card>
 
           <div className="text-balance text-center text-xs text-muted-foreground">
-            Copyright &copy; 2025 SWAMP System. All rights reserved.
+            Copyright &copy; 2025 SWAMP. All rights reserved.
           </div>
         </div>
       </div>
