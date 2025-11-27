@@ -27,8 +27,11 @@ dist-ssr
 
 
 docker
+<<<<<<< HEAD
 terraform
 *storybook.log
 storybook-static
 terraform/.terraform/
 terraform/.terraform/
+=======
+>>>>>>> 1d379444f2bbf189515ef5ee4a48eb9e30da66d2
