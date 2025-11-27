@@ -5,7 +5,7 @@ import Settings from "./pages/Settings";
 import Analytics from "./pages/Analytics";
 import ProtectedRoute from "./routes/ProtectedRoute";
 
-const DEV_MODE = true; 
+const DEV_MODE = false; 
 
 export default function App() {
   return (

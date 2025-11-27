@@ -8,7 +8,7 @@ import { Button } from "../components/ui/button";
 import { Card } from "../components/ui/card";
 import { cn } from "../lib/utils";
 
-const DEV_MODE = true;
+const DEV_MODE = false;
 
 export default function Login() {
   const { instance, accounts } = useMsal();
