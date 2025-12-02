@@ -1,25 +1,20 @@
-import { useEffect } from "react";
-import { useMsal } from "@azure/msal-react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginRequest } from "../config/authconfig";
 import { LogIn } from "lucide-react";
-
 import { Button } from "../components/ui/button";
 import { Card } from "../components/ui/card";
 import { cn } from "../lib/utils";
+import { supabase } from "@/lib/supabaseClient";
+import { Input } from "@/components/ui/input";
 
 const DEV_MODE = false;
 
 export default function Login() {
-  const { instance, accounts } = useMsal();
   const navigate = useNavigate();
 
-  
-  useEffect(() => {
-    if (accounts.length > 0) {
-      navigate("/dashboard");
-    }
-  }, [accounts, navigate]);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
     if (DEV_MODE) {
@@ -27,32 +22,43 @@ export default function Login() {
       return;
     }
 
-    try {
-      await instance.loginRedirect(loginRequest);
-      navigate("/dashboard");
-    } catch (error) {
-      console.error("Login failed:", error);
+    setLoading(true);
+
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    setLoading(false);
+
+    if (error) {
+      alert("Login failed: " + error.message);
+      return;
     }
+
+    navigate("/dashboard");
   };
 
-  
   return (
     <div className="bg-muted flex min-h-svh flex-col items-center justify-center p-6 md:p-10">
-      <div style={{ width: '100%', maxWidth: '56rem', margin: '0 auto' }}>
+      <div style={{ width: "100%", maxWidth: "56rem", margin: "0 auto" }}>
         <div className={cn("flex flex-col gap-6")}>
           <Card className="overflow-hidden border-border shadow-xl p-0">
-            
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))' }}>
-              
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))",
+              }}
+            >
+              {/* LEFT SIDE */}
+              <form>
               <div className="p-6 md:p-8 flex flex-col justify-center bg-card">
                 <div className="flex flex-col gap-6">
-                 
                   <div className="flex flex-col items-center text-center gap-2">
-                    
                     <img
-                      src="/logo.webp"
+                      src="/swamp-logo.svg"
                       alt="SWAMP Logo"
-                      className="h-13 w-auto mb-1"
+                      className="h-12 w-auto mb-1"
                     />
 
                     <h1 className="text-2xl font-bold">Welcome back</h1>
@@ -61,31 +67,69 @@ export default function Login() {
                     </p>
                   </div>
 
-                  
-                  <div className="grid gap-2">
+                  {/* Email + Password Fields */}
+                  <div className="grid gap-3">
+                    <Input
+                      type="email"
+                      placeholder="Email address"
+                      autoComplete="current-email"
+
+                      className="p-3 text-md"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+
+                    <Input
+                      type="password"
+                      placeholder="Password"
+                      className="p-3 text-md"
+                      autoComplete="current-password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+
                     <Button
                       onClick={handleLogin}
-                      className="w-full !bg-green-600 hover:!bg-green-500 text-white"
+                      className="w-full !bg-green-600 hover:!bg-green-500 text-white cursor-pointer"
                       size="lg"
+                      disabled={loading}
                     >
                       <LogIn className="mr-2 h-4 w-4" />
-                      Sign in with Microsoft
+                      {loading ? "Signing in..." : "Sign in"}
                     </Button>
                   </div>
-
                   
+                  {/* Divider */}
+                  {/* Divider */}
                   <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
                     <span className="relative z-10 bg-card px-2 text-muted-foreground">
                       Or continue with
                     </span>
                   </div>
 
-                 
-                  <div className="grid grid-cols-2 gap-4">
+                  {/* Social Login Buttons */}
+                  <div className="grid grid-cols-2 gap-4 mt-2">
+                    {/* Google */}
                     <Button
                       variant="outline"
-                      className="w-full"
+                      className="w-full cursor-pointer"
                       aria-label="Sign in with Google"
+                      onClick={async () => {
+                        if (DEV_MODE) {
+                          navigate("/dashboard");
+                          return;
+                        }
+
+                        const { error } = await supabase.auth.signInWithOAuth({
+                          provider: "google",
+                          options: {
+                            redirectTo: window.location.origin + "/dashboard",
+                          },
+                        });
+
+                        if (error)
+                          alert("Google login failed: " + error.message);
+                      }}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -98,10 +142,27 @@ export default function Login() {
                         />
                       </svg>
                     </Button>
+
+                    {/* Meta / Facebook */}
                     <Button
                       variant="outline"
-                      className="w-full"
+                      className="w-full cursor-pointer"
                       aria-label="Sign in with Meta"
+                      onClick={async () => {
+                        if (DEV_MODE) {
+                          navigate("/dashboard");
+                          return;
+                        }
+
+                        const { error } = await supabase.auth.signInWithOAuth({
+                          provider: "facebook", // Meta = Facebook on Supabase
+                          options: {
+                            redirectTo: window.location.origin + "/dashboard",
+                          },
+                        });
+
+                        if (error) alert("Meta login failed: " + error.message);
+                      }}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -114,8 +175,9 @@ export default function Login() {
                         />
                       </svg>
                     </Button>
+                  
                   </div>
-
+                 
                   <div className="text-center text-sm text-muted-foreground">
                     By clicking continue, you agree to our{" "}
                     <a href="#" className="underline hover:text-primary">
@@ -129,22 +191,25 @@ export default function Login() {
                   </div>
                 </div>
               </div>
+              </form>
 
-              
-              <div style={{ 
-                position: 'relative',
-                minHeight: '600px',
-                display: 'block'
-              }}>
+              {/* RIGHT SIDE IMAGE */}
+              <div
+                style={{
+                  position: "relative",
+                  minHeight: "600px",
+                  display: "block",
+                }}
+              >
                 <img
                   src="/farm.jpg"
                   alt="Smart Farming"
                   style={{
-                    position: 'absolute',
+                    position: "absolute",
                     inset: 0,
-                    height: '100%',
-                    width: '100%',
-                    objectFit: 'cover'
+                    height: "100%",
+                    width: "100%",
+                    objectFit: "cover",
                   }}
                 />
               </div>
@@ -152,7 +217,7 @@ export default function Login() {
           </Card>
 
           <div className="text-balance text-center text-xs text-muted-foreground">
-            Copyright &copy; 2025 SWAMP. All rights reserved.
+            Copyright © 2025 SWAMP. All rights reserved.
           </div>
         </div>
       </div>

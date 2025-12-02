@@ -1,3 +1,4 @@
+// Legacy interface for backward compatibility
 export interface SensorReading {
     id: string;
     sensorId: string;
@@ -7,6 +8,19 @@ export interface SensorReading {
     humidity: number; // percentage (0-100)
     waterUsed: number; // liters
   }
+
+// Helper function to convert database reading to legacy format
+export function dbReadingToLegacy(reading: import('./database').SensorReading, sensorId: string): SensorReading {
+  return {
+    id: reading.id,
+    sensorId: sensorId,
+    timestamp: reading.timestamp,
+    soilMoisture: reading.soil_moisture ?? 0,
+    temperature: reading.temperature ?? 0,
+    humidity: reading.humidity ?? 0,
+    waterUsed: reading.water_used ?? 0,
+  };
+}
   
   export interface MetricCard {
     title: string;

@@ -27,8 +27,8 @@ import {
 
 const data = {
   user: {
-    name: "shadcn",
-    email: "m@example.com",
+    name: "Adib Salama",
+    email: "adibsalama@example.com",
     avatar: "/avatars/shadcn.jpg",
   },
   teams: [
@@ -114,7 +114,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             >
               <a href="#" className="flex items-center gap-3">
                 <img
-                  src="/logo.webp"
+                  src="/swamp-logo.svg"
                   alt="swamp logo"
                   className="h-full w-full rounded-md object-contain"
                 />

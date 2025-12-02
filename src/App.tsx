@@ -1,19 +1,17 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
-import Dashboard from "./pages/Dashboard"; 
+import Dashboard from "./pages/Dashboard";
 import Settings from "./pages/Settings";
 import Analytics from "./pages/Analytics";
 import ProtectedRoute from "./routes/ProtectedRoute";
 
-const DEV_MODE = false; 
+const DEV_MODE = false;
 
 export default function App() {
   return (
     <Routes>
-      {/* Public Route */}
       <Route path="/login" element={<Login />} />
 
-      {/* Protected Routes */}
       <Route
         path="/dashboard"
         element={
@@ -53,7 +51,6 @@ export default function App() {
         }
       />
 
-      {/* Default Redirects */}
       <Route path="/" element={<Navigate to="/dashboard" replace />} />
       <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
