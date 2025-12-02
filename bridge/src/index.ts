@@ -115,19 +115,29 @@ async function checkAndCreateAlerts(
   reading: SensorData
 ): Promise<void> {
   // Get user preferences for this farm
-  const { data: farm } = await supabase
+  const { data: farm, error: farmError } = await supabase
     .from('farms')
     .select('owner_id')
     .eq('id', farmId)
-    .single();
+    .maybeSingle();
+
+  if (farmError) {
+    console.error(`❌ Error fetching farm ${farmId}:`, farmError.message);
+    return;
+  }
 
   if (!farm) return;
 
-  const { data: preferences } = await supabase
+  const { data: preferences, error: preferencesError } = await supabase
     .from('user_preferences')
     .select('*')
     .eq('user_id', farm.owner_id)
-    .single();
+    .maybeSingle();
+
+  if (preferencesError) {
+    console.error(`❌ Error fetching user preferences for user ${farm.owner_id}:`, preferencesError.message);
+    return;
+  }
 
   if (!preferences) return;
 
