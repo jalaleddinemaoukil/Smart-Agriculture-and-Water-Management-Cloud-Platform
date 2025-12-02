@@ -24,14 +24,22 @@ dist-ssr
 *.sw?
 
 .env
+.env.local
 
+# Docker
+docker/
 
-docker
-<<<<<<< HEAD
-terraform
+# Terraform
+terraform/.terraform/
+terraform/.terraform.lock.hcl
+terraform/*.tfstate
+terraform/*.tfstate.*
+terraform/crash.log
+terraform/override.tf
+terraform/override.tf.json
+terraform/*_override.tf
+terraform/*_override.tf.json
+
+# Storybook
 *storybook.log
 storybook-static
-terraform/.terraform/
-terraform/.terraform/
-=======
->>>>>>> 1d379444f2bbf189515ef5ee4a48eb9e30da66d2

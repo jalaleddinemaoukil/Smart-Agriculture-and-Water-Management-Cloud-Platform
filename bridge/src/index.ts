@@ -160,7 +160,7 @@ async function checkAndCreateAlerts(
       .eq('type', alert.type)
       .gte('created_at', new Date(Date.now() - 3600000).toISOString()) // Last hour
       .limit(1)
-      .single();
+      .maybeSingle();
 
     if (!existing) {
       await supabase.from('alerts').insert({

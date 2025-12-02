@@ -56,13 +56,18 @@
 
 2. **MQTT Bridge (.env in bridge/)**
    ```bash
-   MQTT_BROKER_URL=mqtts://dd95be6fa8eb408f8d88969d081c5d8d.s1.eu.hivemq.cloud:8883
-   MQTT_USERNAME=jalaledn
-   MQTT_PASSWORD=VyneJoestar@123
+   # Get these from your HiveMQ Cloud dashboard
+   MQTT_BROKER_URL=mqtts://your-broker.hivemq.cloud:8883
+   MQTT_USERNAME=your_mqtt_username
+   MQTT_PASSWORD=your_mqtt_password
    MQTT_TOPIC=swamp/sensors/+/data
-   SUPABASE_URL=https://hhdhnvrfcvitjuzshmmh.supabase.co
-   SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhoZGhudnJmY3ZpdGp1enNobW1oIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NDY4NTM2NSwiZXhwIjoyMDgwMjYxMzY1fQ.BeLmK0yDEwRVjH7WK6nuYXcO70xUy2izgnhUZ_338xQ
+   
+   # Get these from your Supabase project settings
+   SUPABASE_URL=your_supabase_project_url
+   SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
    ```
+   
+   **⚠️ IMPORTANT:** Never commit these credentials to version control. Use environment variables in your deployment platform.
 
 3. **IoT Simulator (.env in docker/)**
    ```bash
