@@ -1,2 +1,6 @@
+packages:
+  - '.'
+  - 'bridge'
+
 onlyBuiltDependencies:
   - esbuild
