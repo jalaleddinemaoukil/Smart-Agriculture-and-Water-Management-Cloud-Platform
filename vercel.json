@@ -5,10 +5,6 @@
   "installCommand": "pnpm install",
   "framework": "vite",
   "outputDirectory": "dist",
-  "env": {
-    "VITE_SUPABASE_URL": "@swamp-supabase-url",
-    "VITE_SUPABASE_ANON_KEY": "@swamp-supabase-anon-key"
-  },
   "regions": ["iad1"],
   "rewrites": [
     {
