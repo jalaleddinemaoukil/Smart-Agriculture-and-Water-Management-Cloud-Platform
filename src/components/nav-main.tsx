@@ -32,7 +32,6 @@ export function NavMain() {
       url: "/analytics",
       icon: BarChart3,
       isActive: location.pathname === "/analytics",
-      badge: "Week 3",
     },
     {
       title: "Settings",

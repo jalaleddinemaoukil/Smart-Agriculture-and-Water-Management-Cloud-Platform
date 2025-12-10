@@ -7,36 +7,57 @@ import { cn } from "../lib/utils";
 import { supabase } from "@/lib/supabaseClient";
 import { Input } from "@/components/ui/input";
 
-const DEV_MODE = false;
-
 export default function Login() {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = async () => {
-    if (DEV_MODE) {
-      navigate("/dashboard");
-      return;
-    }
-
+  const handleLogin = async (e?: React.FormEvent) => {
+    if (e && 'preventDefault' in e) e.preventDefault();
+    setErrorMsg(null);
     setLoading(true);
 
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
-    setLoading(false);
+      // Safe debug info (no tokens). Only for development troubleshooting.
+      console.debug('signIn result', {
+        userPresent: !!data?.user,
+        userEmail: data?.user?.email ? (data.user.email ? true : false) : false,
+        sessionCreated: !!data?.session,
+        errorMessage: error?.message ?? null,
+      });
 
-    if (error) {
-      alert("Login failed: " + error.message);
-      return;
+      if (error) {
+        console.error('Sign-in error:', error);
+        const errorObj = error as { status?: number };
+        if (errorObj.status === 400 || errorObj.status === 401) {
+          setErrorMsg('Invalid email or password.');
+        } else {
+          setErrorMsg('Login failed. Please try again later.');
+        }
+        return;
+      }
+
+      // If no session was created, it's often due to email confirmation requirement
+      if (!data?.session) {
+        setErrorMsg(
+          'Sign-in initiated. If you recently created this account, check your email to confirm the address before signing in.'
+        );
+        return;
+      }
+
+      // Successful sign in with session: navigate to dashboard
+      navigate('/dashboard');
+    } finally {
+      setLoading(false);
     }
-
-    navigate("/dashboard");
   };
 
   return (
@@ -51,7 +72,7 @@ export default function Login() {
               }}
             >
               {/* LEFT SIDE */}
-              <form>
+              <form onSubmit={handleLogin}>
               <div className="p-6 md:p-8 flex flex-col justify-center bg-card">
                 <div className="flex flex-col gap-6">
                   <div className="flex flex-col items-center text-center gap-2">
@@ -76,7 +97,10 @@ export default function Login() {
 
                       className="p-3 text-md"
                       value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      onChange={(e) => {
+                        setErrorMsg(null);
+                        setEmail(e.target.value);
+                      }}
                     />
 
                     <Input
@@ -85,12 +109,19 @@ export default function Login() {
                       className="p-3 text-md"
                       autoComplete="current-password"
                       value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      onChange={(e) => {
+                        setErrorMsg(null);
+                        setPassword(e.target.value);
+                      }}
                     />
 
+                    {errorMsg && (
+                      <p className="text-sm text-red-600">{errorMsg}</p>
+                    )}
+
                     <Button
-                      onClick={handleLogin}
-                      className="w-full !bg-green-600 hover:!bg-green-500 text-white cursor-pointer"
+                      type="submit"
+                      className="w-full bg-green-600 hover:bg-green-500 text-white cursor-pointer"
                       size="lg"
                       disabled={loading}
                     >
@@ -115,11 +146,6 @@ export default function Login() {
                       className="w-full cursor-pointer"
                       aria-label="Sign in with Google"
                       onClick={async () => {
-                        if (DEV_MODE) {
-                          navigate("/dashboard");
-                          return;
-                        }
-
                         const { error } = await supabase.auth.signInWithOAuth({
                           provider: "google",
                           options: {
@@ -149,11 +175,6 @@ export default function Login() {
                       className="w-full cursor-pointer"
                       aria-label="Sign in with Meta"
                       onClick={async () => {
-                        if (DEV_MODE) {
-                          navigate("/dashboard");
-                          return;
-                        }
-
                         const { error } = await supabase.auth.signInWithOAuth({
                           provider: "facebook", // Meta = Facebook on Supabase
                           options: {

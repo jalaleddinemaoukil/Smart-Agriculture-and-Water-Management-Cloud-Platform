@@ -1,5 +1,3 @@
-// Database types matching Supabase schema
-
 export interface Database {
   public: {
     Tables: {

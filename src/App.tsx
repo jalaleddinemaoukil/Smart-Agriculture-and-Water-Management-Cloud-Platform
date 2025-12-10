@@ -3,7 +3,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Settings from "./pages/Settings";
 import Analytics from "./pages/Analytics";
-import ProtectedRoute from "./routes/ProtectedRoute";
+import ProtectedRoute from "./auth/ProtectedRoute";
 
 const DEV_MODE = false;
 

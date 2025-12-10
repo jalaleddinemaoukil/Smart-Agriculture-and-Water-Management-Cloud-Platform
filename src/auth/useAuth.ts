@@ -40,8 +40,22 @@ export function useAuth() {
         if (!cancelled) {
           setProfile(data);
         }
-      } catch {
-        // Handle error silently
+      } catch (err) {
+          // Log error for debugging so 500 responses surface in the client console
+          // (no secrets are logged)
+          console.error('fetchProfile failed for user', { userId: user.id, err });
+          try {
+            const { useDebugStore } = await import('@/stores/debugStore');
+            const errorObj = err as { message?: string; status?: number };
+            useDebugStore.getState().setError({
+              source: 'fetchProfile',
+              message: errorObj?.message ?? 'fetchProfile failed',
+              status: errorObj?.status ?? null,
+              details: err,
+            });
+          } catch {
+            // Ignore debugStore import errors
+          }
       } finally {
         if (!cancelled) {
           setProfileLoading(false);

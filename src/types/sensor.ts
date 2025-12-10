@@ -1,4 +1,4 @@
-// Legacy interface for backward compatibility
+
 export interface SensorReading {
     id: string;
     sensorId: string;
@@ -9,7 +9,7 @@ export interface SensorReading {
     waterUsed: number; // liters
   }
 
-// Helper function to convert database reading to legacy format
+
 export function dbReadingToLegacy(reading: import('./database').SensorReading, sensorId: string): SensorReading {
   return {
     id: reading.id,

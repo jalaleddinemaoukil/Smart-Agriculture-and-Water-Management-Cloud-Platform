@@ -1,34 +1,32 @@
-import { useEffect, useState } from "react";
-import { supabase } from "../lib/supabaseClient";
-import type { AuthChangeEvent, Session, User } from "@supabase/supabase-js";
-import type { ReactNode } from "react";
-import { AuthContext } from "./AuthContext";
+import React, { useEffect, useState } from 'react';
+import { supabase } from '../lib/supabaseClient';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from './AuthContext';
+import type { User } from '@supabase/supabase-js';
 
-interface AuthProviderProps {
-  children: ReactNode;
-}
-
-export function AuthProvider({ children }: AuthProviderProps) {
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Load session
+    // initial session
     supabase.auth.getSession().then(({ data }) => {
-      const user = data.session?.user || null;
-      setUser(user);
+      setUser(data.session?.user ?? null);
       setLoading(false);
     });
 
-    // Subscribe to changes
-    supabase.auth.onAuthStateChange((_event: AuthChangeEvent, session: Session | null) => {
-      setUser(session?.user || null);
+    // on auth change
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+        setLoading(false);
+      if (!session) navigate('/login');
     });
-  }, []);
 
-  return (
-    <AuthContext.Provider value={{ user, loading }}>
-      {children}
-    </AuthContext.Provider>
-  );
-}
+    return () => {
+      listener.subscription.unsubscribe();
+    };
+  }, [navigate]);
+
+  return <AuthContext.Provider value={{ user, loading }}>{children}</AuthContext.Provider>;
+};
