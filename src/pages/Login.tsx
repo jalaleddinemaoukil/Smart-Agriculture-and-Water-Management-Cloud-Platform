@@ -65,12 +65,7 @@ export default function Login() {
       <div style={{ width: "100%", maxWidth: "56rem", margin: "0 auto" }}>
         <div className={cn("flex flex-col gap-6")}>
           <Card className="overflow-hidden border-border shadow-xl p-0">
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))",
-              }}
-            >
+            <div className="grid md:grid-cols-2 grid-cols-1">
               {/* LEFT SIDE */}
               <form onSubmit={handleLogin}>
               <div className="p-6 md:p-8 flex flex-col justify-center bg-card">
@@ -215,23 +210,11 @@ export default function Login() {
               </form>
 
               {/* RIGHT SIDE IMAGE */}
-              <div
-                style={{
-                  position: "relative",
-                  minHeight: "600px",
-                  display: "block",
-                }}
-              >
+              <div className="relative h-64 md:h-auto md:min-h-[600px]">
                 <img
                   src="/farm.jpg"
                   alt="Smart Farming"
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    height: "100%",
-                    width: "100%",
-                    objectFit: "cover",
-                  }}
+                  className="absolute inset-0 h-full w-full object-cover"
                 />
               </div>
             </div>
