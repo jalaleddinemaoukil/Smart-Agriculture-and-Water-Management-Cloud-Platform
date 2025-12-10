@@ -5,8 +5,6 @@ import Settings from "./pages/Settings";
 import Analytics from "./pages/Analytics";
 import ProtectedRoute from "./auth/ProtectedRoute";
 
-const DEV_MODE = false;
-
 export default function App() {
   return (
     <Routes>
@@ -15,39 +13,27 @@ export default function App() {
       <Route
         path="/dashboard"
         element={
-          DEV_MODE ? (
+          <ProtectedRoute>
             <Dashboard />
-          ) : (
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          )
+          </ProtectedRoute>
         }
       />
 
       <Route
         path="/settings"
         element={
-          DEV_MODE ? (
+          <ProtectedRoute>
             <Settings />
-          ) : (
-            <ProtectedRoute>
-              <Settings />
-            </ProtectedRoute>
-          )
+          </ProtectedRoute>
         }
       />
 
       <Route
         path="/analytics"
         element={
-          DEV_MODE ? (
+          <ProtectedRoute>
             <Analytics />
-          ) : (
-            <ProtectedRoute>
-              <Analytics />
-            </ProtectedRoute>
-          )
+          </ProtectedRoute>
         }
       />
 
