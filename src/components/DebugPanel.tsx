@@ -1,4 +1,3 @@
-import React from 'react';
 import { useDebugStore } from '@/stores/debugStore';
 
 export default function DebugPanel() {

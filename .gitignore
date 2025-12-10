@@ -43,3 +43,5 @@ terraform/*_override.tf.json
 # Storybook
 *storybook.log
 storybook-static
+.vercel
+.env*.local
