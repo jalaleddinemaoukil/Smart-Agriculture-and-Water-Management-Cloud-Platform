@@ -1,0 +1,49 @@
+version: 2
+updates:
+  # Frontend dependencies
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 10
+    groups:
+      vite:
+        patterns:
+          - "vite*"
+          - "@vitejs/*"
+      react:
+        patterns:
+          - "react*"
+          - "@types/react*"
+      ui:
+        patterns:
+          - "@radix-ui/*"
+          - "lucide-react"
+      supabase:
+        patterns:
+          - "@supabase/*"
+    labels:
+      - "dependencies"
+      - "frontend"
+
+  # Python dependencies (IoT Simulator)
+  - package-ecosystem: "pip"
+    directory: "/docker"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "python"
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    labels:
+      - "dependencies"
+      - "github-actions"
